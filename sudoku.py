@@ -12,11 +12,14 @@ class Sudoku(object):
                 return True
         return False
 
-    # Falta Terminar
     def numberInRegion(self, number, posx, posy):
-        pass
+        difPosx = posx // 3
+        difPosy = posy // 3
+        for row in range(3):
+            for column in range(3):
+                if self.board[difPosx*3+row][difPosy*3+column] == str(number):
+                    return True
 
-    # Como manejar Exepciones?
     def putNumber(self, number, posx, posy):
         if self.copyBoard[posx][posy] != 'X':
             return False

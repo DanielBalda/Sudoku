@@ -24,6 +24,10 @@ class TestSudoku(unittest.TestCase):
         sudoku = Sudoku("53XX7XXXX6XX195XXXX98XXXX6X8XXX6XXX34XX8X3XX17XXX2XXX6X6XXXX28XXXX419XX5XXXX8XX79")
         self.assertTrue(sudoku.putNumber(3, 2, 4))
 
+    def test_put_number_exist_in_region(self):
+        sudoku = Sudoku("XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX7X")
+        self.assertFalse(sudoku.putNumber(7, 7, 6))
+
     def test_game_not_over(self):
         sudoku = Sudoku("53XX7XXXX6XX195XXXX98XXXX6X8XXX6XXX34XX8X3XX17XXX2XXX6X6XXXX28XXXX419XX5XXXX8XX79")
         over = sudoku.isOver()
@@ -32,7 +36,7 @@ class TestSudoku(unittest.TestCase):
     def test_game_not_over_2(self):
         sudoku = Sudoku("53XX7XXXX6XX195XX2X98XXXX6X8XXX6XXX34XX8X3XX17XXX2XXX6X6X3XX28XXXX419XX5XXXX8XX79")
         self.assertTrue(sudoku.putNumber(3, 2, 4))
-        self.assertTrue(sudoku.putNumber(1, 3, 6))
+        self.assertTrue(sudoku.putNumber(5, 3, 6))
         self.assertFalse(sudoku.putNumber(1, 5, 8))
         over = sudoku.isOver()
         self.assertFalse(over)
