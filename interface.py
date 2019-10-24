@@ -1,4 +1,10 @@
-from sudoku import Sudoku
+from sudoku import (
+    Sudoku,
+    PositionFixed,
+    NumberInRow,
+    NumberInColumn,
+    NumberInRegion
+)
 from api import Api
 import os
 
@@ -18,32 +24,39 @@ class Interface(object):
 
     def validateNumber(self, number, posx, posy):
         try:
-            return 0 < int(self.number) < 10 and \
-              -1 < int(self.posx) < int(self.boardSize) and \
-              -1 < int(self.posy) < int(self.boardSize)
+            if 0 < int(number) < 10 and -1 < int(posx) < int(self.boardSize) and -1 < int(posy) < int(self.boardSize):
+                return True
         except Exception:
             return False
 
-    def play(self):
-        self.gameDifficult()
+    def game(self):
         print(self.sudoku.printBoard())
-        while not self.sudoku.isOver():
-            self.number = input("\nPlace number: ")
-            self.posx = input("Place position in X: ")
-            self.posy = input("Place position in Y: ")
-            if self.validateNumber(self.number, self.posx, self.posy):
-                self.sudoku.putNumber(int(self.number), int(self.posx), int(self.posy))
-                os.system("clear")
-                self.sudoku.printBoard()
-            else:
-                os.system("clear")
-                print("Invalid!!!. Place other number.")
-                self.sudoku.printBoard()
-        print("\n#### Game Over! ####")
+        try:
+            while not self.sudoku.isOver():
+                self.number = input("\nPlace number: ")
+                self.posx = input("Place position in X: ")
+                self.posy = input("Place position in Y: ")
+                if self.validateNumber(self.number, self.posx, self.posy):
+                    self.sudoku.putNumber(int(self.number), int(self.posx), int(self.posy))
+                    os.system("clear")
+                    print(self.sudoku.printBoard())
+                else:
+                    os.system("clear")
+                    print("Place valid numbers.")
+                    print(self.sudoku.printBoard())
+            print("\n#### Game Over! ####")
+        except PositionFixed:
+            os.system("clear"), print("This postion is fixed!"), self.game()
 
+        except NumberInRow:
+            os.system("clear"), print("The number already exists in the Row!"), self.game()
 
-sudokuGame = Interface()
-sudokuGame.play()
+        except NumberInColumn:
+            os.system("clear"), print("The number already exists in the Column!"), self.game()
 
-#tablero 4x4 resuelto = "4231132421433412"
-#tablero 9x9 resuelto = "682341579147956823593287146256479318319628754478135962865792431924513687731864295"
+        except NumberInRegion:
+            os.system("clear"), print("The number already exists in the Region!"), self.game()
+
+    def start(self):
+        self.gameDifficult()
+        self.game()

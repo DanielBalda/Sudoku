@@ -6,12 +6,8 @@ class Api(object):
         self.size = size
 
     def request(self):
-        try:
-            self.resp = requests.get('http://www.cs.utep.edu/cheon/ws/sudoku/new/?level=1&size=' + str(self.size))
-            if self.resp.status_code == 200:
-                return self.stringBoard(self.size, self.resp)
-        except Exception:
-            return "Ups! Server not respond."
+        self.resp = requests.get('http://www.cs.utep.edu/cheon/ws/sudoku/new/?level=1&size=' + str(self.size))
+        return self.stringBoard(self.size, self.resp)
 
     def stringBoard(self, size, resp):
         jsonData = self.resp.json()['squares']

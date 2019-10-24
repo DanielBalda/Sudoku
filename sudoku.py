@@ -1,8 +1,27 @@
+import copy
+
+
+class PositionFixed(Exception):
+    pass
+
+
+class NumberInRow(Exception):
+    pass
+
+
+class NumberInColumn(Exception):
+    pass
+
+
+class NumberInRegion(Exception):
+    pass
+
+
 class Sudoku(object):
     def __init__(self, board):
         self.size = int(len(board)**.5)
         self.board = [[board[i+j*self.size] for i in range(self.size)] for j in range(self.size)]
-        self.copyBoard = self.board.copy()
+        self.copyBoard = copy.deepcopy(self.board)
 
     def numberInRow(self, number, posx):
         return str(number) in self.board[posx]
@@ -18,24 +37,22 @@ class Sudoku(object):
         difPosy = posy // aux
         for row in range(aux):
             for column in range(aux):
-                if self.board[difPosx*aux+row][difPosy*aux+column] == str(number):
+                if self.board[difPosx*aux+row][difPosy*aux+column] \
+                     == str(number):
                     return True
 
     def putNumber(self, number, posx, posy):
         if self.copyBoard[posx][posy] != '■':
-            return False
+            raise PositionFixed()
         elif self.numberInRow(number, posx):
-            return False
+            raise NumberInRow()
         elif self.numberInColumn(number, posy):
-            return False
+            raise NumberInColumn()
         elif self.numberInRegion(number, posx, posy):
-            return False
+            raise NumberInRegion()
         self.board[posx][posy] = str(number)
         return True
 
-    def isOver(self):
-        return '■' not in self.board[int(self.size)-1]
-    
     def printBoard(self):
         printing = ''
         if len(self.board) == 9:
@@ -46,11 +63,17 @@ class Sudoku(object):
             lines = 17
         printing += "-"*lines + "\n"
         for i, row in enumerate(self.board):
-            printing += (("|" + elements *int(len(self.board)**.5)).format(*[x if x != 0 else " " for x in row])) + "\n"
+            printing += (("|" + elements * int(len(self.board)**.5)).format(*[x if x != 0 else " " for x in row])) + "\n"
             if i == (len(self.board)-1):
                 printing += ("-"*lines) + "\n"
             elif i % (len(self.board)**.5) == 2:
                 printing += ("|" + "---+"*(len(self.board)-1) + "---|") + "\n"
             else:
                 printing += ("|" + "   -"*(len(self.board)-1) + "   |") + "\n"
-        return printing 
+        return printing
+
+    def isOver(self):
+        for i in range(int(self.size)):
+            if '■' in self.board[i]:
+                return False
+        return True
