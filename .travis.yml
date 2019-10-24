@@ -1,0 +1,17 @@
+language: python
+python:
+  - "3.6"
+script:
+  - coverage run testSudoku.py
+
+script:
+  - coverage run testInterface.py
+
+script:
+  - coverage run testApi.py
+
+install:
+  - pip install -r requirements.txt
+
+after_success:
+  - coveralls
