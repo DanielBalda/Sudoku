@@ -8,6 +8,7 @@ class TestSudoku(unittest.TestCase):
     def test_api_9x9_1(self):
         mock = MagicMock()
         mock.json = MagicMock(return_value={"response":"true","size":"9","squares":[{"x":0,"y":0,"value":5},{"x":0,"y":1,"value":3},{"x":0,"y":3,"value":7},{"x":0,"y":6,"value":8},{"x":0,"y":8,"value":6},{"x":1,"y":0,"value":4},{"x":1,"y":4,"value":1},{"x":1,"y":5,"value":2},{"x":1,"y":6,"value":7},{"x":2,"y":1,"value":7},{"x":2,"y":3,"value":5},{"x":2,"y":5,"value":8},{"x":2,"y":6,"value":4},{"x":2,"y":7,"value":3},{"x":3,"y":0,"value":1},{"x":3,"y":1,"value":8},{"x":3,"y":4,"value":2},{"x":3,"y":7,"value":4},{"x":4,"y":2,"value":7},{"x":4,"y":3,"value":4},{"x":4,"y":4,"value":8},{"x":4,"y":5,"value":1},{"x":4,"y":6,"value":3},{"x":5,"y":1,"value":2},{"x":5,"y":2,"value":4},{"x":5,"y":4,"value":5},{"x":5,"y":6,"value":6},{"x":5,"y":7,"value":8},{"x":6,"y":1,"value":1},{"x":6,"y":2,"value":3},{"x":6,"y":3,"value":8},{"x":6,"y":5,"value":6},{"x":6,"y":7,"value":7},{"x":7,"y":2,"value":6},{"x":7,"y":3,"value":2},{"x":7,"y":4,"value":3},{"x":7,"y":8,"value":8},{"x":8,"y":0,"value":8},{"x":8,"y":2,"value":9},{"x":8,"y":7,"value":6},{"x":8,"y":8,"value":3}]})
+        mock.status_code = mock.PropertyMock(return_value=200)
         with patch("api.requests.get", return_value=mock):
             apiResponse = Api(9).request()
         self.assertEqual(apiResponse, "53■7■■8■64■■■127■■■7■5■843■18■■2■■4■■■74813■■■24■5■68■■138■6■7■■■623■■■88■9■■■■63")
