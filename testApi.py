@@ -37,6 +37,3 @@ class TestSudoku(unittest.TestCase):
 
 if __name__ == "__main__":
     unittest.main()
-
-#https://docs.python.org/3/library/unittest.mock.html
-#https://docs.python.org/3/library/unittest.mock-examples.html
