@@ -21,6 +21,10 @@ class InputChar(Exception):
     pass
 
 
+class InputSymbol(Exception):
+    pass
+
+
 class Interface(object):
 
     def gameDifficult(self):
@@ -35,6 +39,9 @@ class Interface(object):
         self.sudoku = Sudoku(self.api.request())
 
     def validateNumber(self, number, posx, posy):
+        symbols = '[~!@#$%^&*()/_+{}":;\']+$'
+        if set(symbols).intersection(number) or set(symbols).intersection(posx) or set(symbols).intersection(posy):
+            raise InputSymbol()
         if number == "" or posx == "" or posy == "":
             raise EmptyVar()
         if number.isalpha() or posx.isalpha() or posy.isalpha():
@@ -75,6 +82,9 @@ class Interface(object):
 
         except EmptyVar:
             os.system("clear"), print("(!) No spaces allowed"), self.game()
+
+        except InputSymbol:
+            os.system("clear"), print("(!) No symbol allowed"), self.game()
 
     def start(self):
         self.gameDifficult()

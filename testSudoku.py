@@ -112,6 +112,19 @@ class TestSudoku(unittest.TestCase):
         over = sudoku.isOver()
         self.assertFalse(over)
 
+    def test_number_over_number_not_fixed(self):
+        sudoku = Sudoku("53■■7■■■■"
+                        "6■■195■■2"
+                        "■98■■■■6■"
+                        "8■■■6■■■3"
+                        "4■■8■3■■1"
+                        "7■■■2■■■6"
+                        "■6■3■■28■"
+                        "■■■419■■5"
+                        "■■■■8■■75")
+        self.assertTrue(sudoku.putNumber(9, 8, 0))
+        self.assertTrue(sudoku.putNumber(3, 8, 0))
+
     def test_game_not_over_2(self):
         sudoku = Sudoku("53■■7■■■■"
                         "6■■195■■2"
@@ -215,18 +228,18 @@ class TestSudoku(unittest.TestCase):
                                              "-------------------------------------\n")
 
     def test_board_print_4x4(self):
-        sudoku = Sudoku("1234"
+        sudoku = Sudoku("1■3■"
                         "5678"
-                        "9123"
-                        "4567")
+                        "■123"
+                        "45■7")
         self.assertEqual(sudoku.printBoard(),"-----------------\n"
-                                             "| 1   2 | 3   4 |\n"
+                                             "| 1   ■ | 3   ■ |\n"
                                              "|   -   -   -   |\n"
                                              "| 5   6 | 7   8 |\n"
                                              "|   -   -   -   |\n"
-                                             "| 9   1 | 2   3 |\n"
+                                             "| ■   1 | 2   3 |\n"
                                              "|   -   -   -   |\n"
-                                             "| 4   5 | 6   7 |\n"
+                                             "| 4   5 | ■   7 |\n"
                                              "-----------------\n")
 
 
