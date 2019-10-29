@@ -65,7 +65,7 @@ class Sudoku(object):
         for i, row in enumerate(self.board):
             printing += (("|" + elements * int(len(self.board)**.5)).format(*[x if x != 0 else " " for x in row])) + "\n"
             if i == (len(self.board)-1):
-                printing += ("-"*lines) + "\n"
+                printing += ("-"*lines)
             elif i % (len(self.board)**.5) == 2:
                 printing += ("|" + "---+"*(len(self.board)-1) + "---|") + "\n"
             else:
