@@ -1,15 +1,21 @@
 import requests
 
 
+class ApiNotRespond(Exception):
+    pass
+
+
 class Api(object):
     def __init__(self, size):
         self.size = size
 
     def request(self):
         self.resp = requests.get('http://www.cs.utep.edu/cheon/ws/sudoku/new/?level=1&size=' + str(self.size))
-        return self.stringBoard(self.size, self.resp)
+        if self.resp.status_code != 200:
+            raise ApiNotRespond()
+        return self.stringBoard(self.resp)
 
-    def stringBoard(self, size, resp):
+    def stringBoard(self, resp):
         jsonData = self.resp.json()['squares']
         self.respBoard = ""
         index = 0
