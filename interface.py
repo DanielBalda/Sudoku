@@ -68,29 +68,28 @@ class Interface(object):
                     print(self.sudoku.printBoard())
             print("\n\033[92m#### Game Over! ####\033[0m")
         except PositionFixed:
-            os.system("clear"), print("\033[91m(!)\033[0m This postion is fixed!")
+            os.system("clear"), print("\033[91m(!)\033[0m This postion is fixed!"), self.game()
 
         except NumberInRow:
-            os.system("clear"), print("\033[91m(!)\033[0m The number already exists in the Row!")
+            os.system("clear"), print("\033[91m(!)\033[0m The number already exists in the Row!"), self.game()
 
         except NumberInColumn:
-            os.system("clear"), print("\033[91m(!)\033[0m The number already exists in the Column!")
+            os.system("clear"), print("\033[91m(!)\033[0m The number already exists in the Column!"), self.game()
 
         except NumberInRegion:
-            os.system("clear"), print("\033[91m(!)\033[0m The number already exists in the Region!")
+            os.system("clear"), print("\033[91m(!)\033[0m The number already exists in the Region!"), self.game()
 
         except InvalidNumber:
-            os.system("clear"), print("\033[91m(!)\033[0m Only numbers between 1 and 9.\n    X & Y between 0 and " + str(int(self.boardSize)-1) + ".")
+            os.system("clear"), print("\033[91m(!)\033[0m Only numbers between 1 and 9.\n    X & Y between 0 and " + str(int(self.boardSize)-1) + "."), self.game()
 
         except InputChar:
-            os.system("clear"), print("\033[91m(!)\033[0m Only numbers, not letters!")
+            os.system("clear"), print("\033[91m(!)\033[0m Only numbers, not letters!"), self.game()
 
         except EmptyVar:
-            os.system("clear"), print("\033[91m(!)\033[0m No spaces allowed")
+            os.system("clear"), print("\033[91m(!)\033[0m No spaces allowed"), self.game()
 
         except InputSymbol:
-            os.system("clear"), print("\033[91m(!)\033[0m No symbol allowed")
-        self.game()
+            os.system("clear"), print("\033[91m(!)\033[0m No symbol allowed"), self.game()
 
     def start(self):
         os.system("clear")
