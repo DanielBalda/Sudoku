@@ -1,4 +1,5 @@
 import unittest
+from parameterized import parameterized
 from interface import (
     Interface,
     EmptyVar,
@@ -13,63 +14,77 @@ class TestInterface(unittest.TestCase):
         self.interface = Interface()
         self.interface.boardSize = 9
 
-    def test_put_letter_in_number(self):
+    @parameterized.expand([
+        ('f', '5', '3'),
+        ('A', '5', '3'),
+        ('j', '5', '3'),
+        ('W', '5', '3'),
+        ('S', '5', '3'),
+        ('o', '5', '3')
+    ])
+    def test_put_letter_in_number(self, number, x, y):
         with self.assertRaises(InputChar):
-            self.interface.validateNumber('f', '5', '3')
+            self.interface.validateNumber(number, x, y)
 
-    def test_put_letter_in_x(self):
+    @parameterized.expand([
+        ('5', 'X', '3'),
+        ('5', 'm', '3'),
+        ('5', 'l', '3'),
+        ('5', 's', '3'),
+        ('5', 'J', '3'),
+        ('5', 'O', '3')
+    ])
+    def test_put_letter_in_x(self, number, x, y):
         with self.assertRaises(InputChar):
-            self.interface.validateNumber('5', 'j', '0')
+            self.interface.validateNumber(number, x, y)
 
-    def test_put_letter_in_y(self):
+    @parameterized.expand([
+        ('5', '2', 'D'),
+        ('5', '2', 'C'),
+        ('5', '2', 'a'),
+        ('5', '2', 'h'),
+        ('5', '2', 'g'),
+        ('5', '2', 'w')
+    ])
+    def test_put_letter_in_y(self, number, x, y):
         with self.assertRaises(InputChar):
-            self.interface.validateNumber('5', '2', 'w')
+            self.interface.validateNumber(number, x, y)
 
-    def test_put_symbol_in_number(self):
+    @parameterized.expand([
+        ('/', '5', '3'),
+        ('%', '5', '3'),
+        ('#', '5', '3'),
+        ('$', '5', '3'),
+        ('(', '5', '3'),
+        ('!', '5', '3')
+    ])
+    def test_put_symbol_in_number(self, number, x, y):
         with self.assertRaises(InputSymbol):
-            self.interface.validateNumber('/', '5', '3')
+            self.interface.validateNumber(number, x, y)
 
-    def test_put_symbol_in_x(self):
+    @parameterized.expand([
+        ('5', ']', '3'),
+        ('5', ';', '3'),
+        ('5', '@', '3'),
+        ('5', '&', '3'),
+        ('5', '$', '3'),
+        ('5', '*', '3')
+    ])
+    def test_put_symbol_in_x(self, number, x, y):
         with self.assertRaises(InputSymbol):
-            self.interface.validateNumber('5', ']', '0')
+            self.interface.validateNumber(number, x, y)
 
-    def test_put_symbol_in_y(self):
+    @parameterized.expand([
+        ('5', '3', '*'),
+        ('5', '3', '&'),
+        ('5', '3', '%'),
+        ('5', '3', '$'),
+        ('5', '3', '#'),
+        ('5', '3', '@')
+    ])
+    def test_put_symbol_in_y(self, number, x, y):
         with self.assertRaises(InputSymbol):
-            self.interface.validateNumber('5', '@', 'w')
+            self.interface.validateNumber(number, x, y)
 
-    def test_put_big_number(self):
-        with self.assertRaises(InvalidNumber):
-            self.interface.validateNumber('18', '4', '2')
-
-    def test_put_negative_number(self):
-        with self.assertRaises(InvalidNumber):
-            self.interface.validateNumber('-8', '4', '2')
-
-    def test_put_blak(self):
-        with self.assertRaises(EmptyVar):
-            self.interface.validateNumber('', '4', '2')
-
-    def test_put_valid_number_9x9(self):
-        self.assertTrue(self.interface.validateNumber('8', '3', '6'))
-
-    def test_put_valid_number_in_x_9x9(self):
-        self.assertTrue(self.interface.validateNumber('2', '5', '2'))
-
-    def test_put_valid_number_in_y_9x9(self):
-        self.assertTrue(self.interface.validateNumber('1', '3', '6'))
-
-    def test_put_valid_number_4x4(self):
-        self.interface.boardSize = 4
-        self.assertTrue(self.interface.validateNumber('7', '3', '1'))
-
-    def test_put_valid_number_in_x_4x4(self):
-        self.interface.boardSize = 4
-        self.assertTrue(self.interface.validateNumber('2', '1', '2'))
-
-    def test_put_valid_number_in_y_4x4(self):
-        self.interface.boardSize = 4
-        self.assertTrue(self.interface.validateNumber('9', '3', '3'))
-
-
-if __name__ == "__main__":
-    unittest.main()
+    @parameterized.expand([
+        ('50', '
