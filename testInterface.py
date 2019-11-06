@@ -110,7 +110,7 @@ class TestInterface(unittest.TestCase):
         with self.assertRaises(InvalidNumber):
             self.interface.validateNumber(number, x, y)
 
-    def test_put_blak(self):
+    def test_put_blank(self):
         with self.assertRaises(EmptyVar):
             self.interface.validateNumber('', '4', '2')
 
@@ -139,14 +139,14 @@ class TestInterface(unittest.TestCase):
 
     @parameterized.expand([
         ('2', '3', '3'),
-        ('5', '2', '1')
+        ('1', '2', '1')
     ])
     def test_put_valid_number_4x4(self, number, x, y):
         self.interface.boardSize = 4
         self.assertTrue(self.interface.validateNumber(number, x, y))
 
     @parameterized.expand([
-        ('9', '3', '0'),
+        ('2', '3', '0'),
         ('4', '2', '3')
     ])
     def test_put_valid_number_in_x_4x4(self, number, x, y):
@@ -154,8 +154,8 @@ class TestInterface(unittest.TestCase):
         self.assertTrue(self.interface.validateNumber(number, x, y))
 
     @parameterized.expand([
-        ('8', '3', '3'),
-        ('6', '2', '0')
+        ('4', '3', '3'),
+        ('3', '2', '0')
     ])
     def test_put_valid_number_in_y_4x4(self, number, x, y):
         self.interface.boardSize = 4

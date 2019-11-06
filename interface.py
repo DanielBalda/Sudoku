@@ -33,6 +33,8 @@ class Interface(object):
     def gameDifficult(self):
         self.boardSize = ''
         while self.boardSize != '4' and self.boardSize != '9':
+            if self.boardSize != '':
+                print("\033[91m(!) Only 4 or 9.\033[0m")
             self.boardSize = input("\u001b[34;1mGame Difficult? 4 or 9:\033[0m ")
             os.system("clear")
         print("\u001b[34;1mChosen difficulty:", self.boardSize +
@@ -51,7 +53,7 @@ class Interface(object):
             raise EmptyVar()
         if number.isalpha() or posx.isalpha() or posy.isalpha():
             raise InputChar()
-        if 0 < int(number) < 10 and -1 < int(posx) < int(self.boardSize) and -1 < int(posy) < int(self.boardSize):
+        if 0 < int(number) <= int(self.boardSize) and -1 < int(posx) < int(self.boardSize) and -1 < int(posy) < int(self.boardSize):
             return True
         raise InvalidNumber()
 
@@ -59,9 +61,9 @@ class Interface(object):
         print(self.sudoku.printBoard())
         try:
             while not self.sudoku.isOver():
-                self.number = input("\n\033[94m#\033[0m Place number: ")
-                self.posx = input("\033[94m#\033[0m Place position in X: ")
-                self.posy = input("\033[94m#\033[0m Place position in Y: ")
+                self.number = input("\n\033[94m#\033[0m Place number: ").replace(' ','')
+                self.posx = input("\033[94m#\033[0m Place position in X: ").replace(' ','')
+                self.posy = input("\033[94m#\033[0m Place position in Y: ").replace(' ','')
                 if self.validateNumber(self.number, self.posx, self.posy):
                     self.sudoku.putNumber(int(self.number), int(self.posx), int(self.posy))
                     os.system("clear")
@@ -80,7 +82,7 @@ class Interface(object):
             os.system("clear"), print("\033[91m(!)\033[0m The number already exists in the Region!"), self.game()
 
         except InvalidNumber:
-            os.system("clear"), print("\033[91m(!)\033[0m Only numbers between 1 and 9.\n    X & Y between 0 and " + str(int(self.boardSize)-1) + "."), self.game()
+            os.system("clear"), print("\033[91m(!)\033[0m Only numbers between 1 and " + self.boardSize + ".\n    X & Y between 0 and " + str(int(self.boardSize)-1) + "."), self.game()
 
         except InputChar:
             os.system("clear"), print("\033[91m(!)\033[0m Only numbers, not letters!"), self.game()
