@@ -41,14 +41,14 @@ class TestSudoku(unittest.TestCase):
         mock.status_code = 408 #Timeout
         with patch("api.requests.get", return_value=mock):
             with self.assertRaises(ApiNotRespond):
-                apiResponse = Api(4).request()
+                Api(4).request()
 
     def test_api_not_found(self):
         mock = MagicMock()
         mock.status_code = 404 #NotFound
         with patch("api.requests.get", return_value=mock):
             with self.assertRaises(ApiNotRespond):
-                apiResponse = Api(9).request()
+                Api(9).request()
 
 if __name__ == "__main__":
     unittest.main()
